@@ -65,7 +65,7 @@ conn.login(user,password,function(err, userInfo){
                       });
                       //update processed replay id on integration tracker
                     //  conn.sobject("Integration_Tracker__c").insert({Name: interfaceName,Last_Replay_Id__c: message.event.replayId},function(err, rec){
-                     conn.sobject("PE_Logger__c").upsert({Status__c: "Completed",Replay_Id__c: message.event.replayId},uniqueId, function(err, rec){
+                     conn.sobject("PE_Logger__c").upsert({Status__c: "Completed",Replay_Id__c: message.event.replayId,Unique_Id__c: uniqueId},"Unique_Id__c", function(err, rec){
                           if (err || !rec.success) {return console.error(err,rec);}
                           console.log("tracker updated");
                       })
@@ -75,7 +75,7 @@ conn.login(user,password,function(err, userInfo){
                     .catch(error => {
                       //capture error in Pe logger
                       console.error(error);
-                      conn.sobject("PE_Logger__c").upsert({Exception__c: error.message,Status__c: "Error", Replay_Id__c: message.event.replayId},uniqueId, function(err, rec){
+                      conn.sobject("PE_Logger__c").upsert({Exception__c: error.message,Status__c: "Error", Replay_Id__c: message.event.replayId,Unique_Id__c: uniqueId},"Unique_Id__c", function(err, rec){
                            if (err || !rec.success) {return console.error(err,rec);}
                            console.log("tracker updated");
                        })
