@@ -48,8 +48,8 @@ conn.login(user,password,function(err, userInfo){
                   console.log(message.event.replayId);
                   console.log(message.payload.Message__c);
                   console.log(message.payload.Unique_Id__c);
-                  var CelciusObj = message.payload.Message__c;
-                  console.log(typeof(CelciusObj));
+                  var messagepl = message.payload.Message__c;
+                  console.log(typeof(messagepl));
                   var uniqueId = message.payload.Unique_Id__c;
 
 
@@ -73,6 +73,7 @@ conn.login(user,password,function(err, userInfo){
 
                     })
                     .catch(error => {
+                      //capture error in Pe logger
                       console.error(error);
                       conn.sobject("PE_Logger__c").upsert({Exception__c: error.message,Replay_Id__c: message.event.replayId},uniqueId, function(err, rec){
                            if (err || !rec.success) {return console.error(err,rec);}
